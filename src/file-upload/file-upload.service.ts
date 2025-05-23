@@ -77,4 +77,8 @@ export class FileUploadService {
     await this.documentRepository.remove(document);
     return true;
   }
+
+  async checkFileExists(filePath: string): Promise<boolean> {
+    return fs.existsSync(filePath);
+  }
 } 
