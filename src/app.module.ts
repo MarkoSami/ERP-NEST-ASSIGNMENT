@@ -12,9 +12,10 @@ import { FileTypeValidationModule } from './file-type-validation/file-type-valid
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'document-management.sqlite',
+      database: process.env.NODE_ENV === 'production' ? '/tmp/document-management.sqlite' : 'document-management.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'production', // Only auto-sync in development
+      logging: process.env.NODE_ENV === 'development',
     }),
     FileUploadModule,
     FileTypeValidationModule,
